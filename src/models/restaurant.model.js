@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const restaurantSchema = new mongoose.Schema({
-  _id: String,
-  name: String,
-  address: String,
-  email: String,
-  contact: Number,
+const restaurantSchema = new Schema({
+  name: { type: String, required: true },
+  address: { type: String, required: true },
+  email: { type: String, require: true },
+  contact: { type: Number, required: true },
 });
 
 module.exports = mongoose.model("Restaurant", restaurantSchema);
