@@ -19,7 +19,7 @@
 
 // server.listen(port);
 const mongoose = require("mongoose");
-const Restaurant = require("./models/restaurant.model");
+const Restaurant = require("./models/restaurant.model.js");
 
 mongoose.connect(
   "mongodb+srv://damith:DHs123456@cluster0.yjyq82k.mongodb.net/?retryWrites=true&w=majority",
