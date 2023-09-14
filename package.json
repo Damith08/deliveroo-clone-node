@@ -1,11 +1,11 @@
 {
   "name": "deliveroo-clone-node",
   "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
+  "description": "Node API for Deliveroo clone",
+  "main": "./src/server.js",
   "scripts": {
-    
-    "devStart": "nodemon ./src/server.js"
+    "dev": "nodemon ./src/server.js",
+    "start": "node ./src/server.js"
   },
   "repository": {
     "type": "git",
@@ -22,11 +22,11 @@
   "homepage": "https://github.com/Damith08/deliveroo-clone-node#readme",
   "dependencies": {
     "express": "^4.18.2",
-    "mongodb": "^6.0.0",
     "mongoose": "^7.5.0"
   },
   "devDependencies": {
     "eslint": "^8.49.0",
+    "nodemon": "^3.0.1",
     "prettier": "3.0.3"
   }
 }
