@@ -1,7 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const commonRoutes = require("./routes/common.routes");
+const restaurantRoutes = require("./routes/restaurant.routes");
+const userRoutes = require("./routes/user.routes");
+const orderRoutes = require("./routes/order.routes");
+const dishRoutes = require("./routes/dish.routes");
+const dishCategoryRoutes = require("./routes/dish-category.routes");
 
+// connecting to the Database
 mongoose
   .connect("mongodb://localhost:27017/restaurant-data-base")
   .then(() => {
@@ -16,18 +23,14 @@ mongoose
 
 const app = express();
 const port = 3000;
-const commonRoutes = require("./routes/common.routes");
-const restaurantRoutes = require("./routes/restaurant.routes");
-const userRoutes = require("./routes/user.routes");
-const oderRoutes = require("./routes/oder.routes");
-const dishRoutes = require("./routes/dish.routes");
-const dishCategoryRoutes = require("./routes/dish-category.routes");
 
+// to parse the JSON body to JavaScript objects
 app.use(bodyParser.json());
+
+// routes
 app.use("/users", userRoutes);
-// app.use("/restaurants", restaurantRoutes);
-app.use("/restaurants/save", restaurantRoutes);
-app.use("/oders", oderRoutes);
+app.use("/restaurants", restaurantRoutes);
+app.use("/orders", orderRoutes);
 app.use("/dishes", dishRoutes);
 app.use("/dish-categories", dishCategoryRoutes);
 app.use(commonRoutes);

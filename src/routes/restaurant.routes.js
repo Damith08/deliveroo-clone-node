@@ -1,34 +1,16 @@
 const express = require("express");
-const Restaurants = require("../models/restaurant.model");
 const router = express.Router();
+const restaurantController = require("../controllers/restaurant.controller");
 
-router.post("/restaurants/save", (req, res) => {
-  let newRestaurant = new Restaurants(req.body);
+// get /restaurants/ - get all restaurants
+router.get("/", restaurantController.getAllRestaurants);
+// get /restaurants/:id - get a single restaurant
 
-  newRestaurant.save((err) => {
-    if (err) {
-      return res.status(400).json({
-        error: err,
-      });
-    }
-    return res.status(200).json({
-      success: "Restaurant saved successfully!",
-    });
-  });
-});
+// post /restaurants - create a new restaurant
+router.post("/", restaurantController.createRestaurant);
 
-router.get("/restaurants", (req, res) => {
-  Restaurants.find().exec((err, Restaurants) => {
-    if (err) {
-      return res.status(400).json({
-        error: err,
-      });
-    }
-    return res.status(200).json({
-      success: true,
-      existingRestaurants: Restaurants,
-    });
-  });
-});
+// patch /restaurants/:id - update a restaurant partially
+// put /restaurants/:id - update a restaurant completely
+// delete /restaurants/:id - delete a restaurant
 
 module.exports = router;
