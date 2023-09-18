@@ -1,8 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 
 mongoose
-  .connect("mongodb://localhost:27017")
+  .connect("mongodb://localhost:27017/restaurant-data-base")
   .then(() => {
     console.log("Connected to the Database successfully!");
   })
@@ -22,8 +23,10 @@ const oderRoutes = require("./routes/oder.routes");
 const dishRoutes = require("./routes/dish.routes");
 const dishCategoryRoutes = require("./routes/dish-category.routes");
 
+app.use(bodyParser.json());
 app.use("/users", userRoutes);
-app.use("/restaurants", restaurantRoutes);
+// app.use("/restaurants", restaurantRoutes);
+app.use("/restaurants/save", restaurantRoutes);
 app.use("/oders", oderRoutes);
 app.use("/dishes", dishRoutes);
 app.use("/dish-categories", dishCategoryRoutes);
