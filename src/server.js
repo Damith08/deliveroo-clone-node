@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+
+// import routes
 const commonRoutes = require("./routes/common.routes");
 const restaurantRoutes = require("./routes/restaurant.routes");
 const userRoutes = require("./routes/user.routes");
