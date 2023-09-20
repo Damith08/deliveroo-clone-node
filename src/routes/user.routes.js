@@ -19,7 +19,7 @@ userRouter.patch("/:id", (req, res) => {
 });
 
 // put /users/:id - update a user completely
-userRouter.patch("/:id", userController.updateUser);
+userRouter.put("/:id", userController.updateUser);
 
 // delete /users/:id - delete a user
 userRouter.delete("/:id", userController.deleteUser);

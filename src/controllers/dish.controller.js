@@ -62,7 +62,7 @@ exports.createDish = (req, res) => {
       // TODO: handle type error from mongoose and return 400
       // TODO: handle required error from mongoose and return 400
       // TODO: handle unique error from mongoose and return 409
-      return res.status(200).json({
+      return res.status(400).json({
         error: err,
       });
     });
@@ -84,7 +84,7 @@ exports.updateDish = (req, res) => {
       // TODO: handle type error from mongoose and return 400
       // TODO: handle required error from mongoose and return 400
       // TODO: handle unique error from mongoose and return 409
-      return res.status(200).json({
+      return res.status(400).json({
         error: err,
       });
     });
@@ -104,7 +104,7 @@ exports.deleteDish = (req, res) => {
       console.log(err, "deleteDish");
       // TODO: handle required error from mongoose and return 400
       // TODO: handle unique error from mongoose and return 409
-      return res.status(200).json({
+      return res.status(400).json({
         error: err,
       });
     });
