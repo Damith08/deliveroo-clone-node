@@ -85,6 +85,8 @@ exports.deleteUser = (req, res) => {
     })
     .catch((err) => {
       console.log(err, "Cannot delete");
+      // TODO: handle required error from mongoose and return 400
+      // TODO: handle unique error from mongoose and return 409
       return res.status(400).json({
         error: err,
       });
