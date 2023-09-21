@@ -83,11 +83,16 @@ exports.createOrder = (req, res) => {
                   });
                 });
             });
+        })
+        .catch((err) => {
+          return res.status(400).json({
+            message: "Restaurant cannot be found",
+          });
         });
     })
     .catch((err) => {
       return res.status(404).json({
-        message: "~DIsh CAnnot be found",
+        message: "Dish Cannot be found",
       });
     });
 };
