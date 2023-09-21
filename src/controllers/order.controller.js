@@ -52,7 +52,7 @@ exports.createOrder = (req, res) => {
     .then((foundDIsh) => {
       restaurantDatabaseService
         .findRestaurantById(req.body.restaurant_id)
-        .then((foundREstaurant) => {
+        .then((foundRestaurant) => {
           userDatabaseService
             .findUserById(req.body.user_id)
             .then((foundUser) => {
@@ -61,7 +61,7 @@ exports.createOrder = (req, res) => {
                 timestamps: new Date(),
                 totalPrice: req.body.total_price,
                 dish: foundDIsh._id,
-                restaurant: foundREstaurant._id,
+                restaurant: foundRestaurant._id,
                 user: foundUser._id,
               });
 

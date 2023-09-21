@@ -1,5 +1,6 @@
 const Dish = require("../models/dish.model");
-
+const restaurantDatabaseService = require("../services/restaurant.database.service");
+const orderDatabaseService = require("../services/order.database.service");
 // get all dishes data
 exports.getAllDishes = (req, res) => {
   Dish.find()
@@ -44,26 +45,46 @@ exports.getDish = (req, res) => {
 
 // create a dish
 exports.createDish = (req, res) => {
-  const newDish = new Dish({
-    name: req.body.name,
-    price: req.body.price,
-  });
+  restaurantDatabaseService
+    .findRestaurantById(req.body.restaurant_id)
+    .then((foundRestaurant) => {
+      orderDatabaseService
+        .findOrderById(req.body.order_id)
+        .then((foundOrder) => {
+          const newDish = new Dish({
+            name: req.body.name,
+            price: req.body.price,
+            restaurant: foundRestaurant._id,
+            order: foundOrder._id,
+          });
 
-  newDish
-    .save()
-    .then((saveDish) => {
-      return res.status(200).json({
-        success: "Dish save successfully!!!",
-        data: saveDish,
-      });
+          newDish
+            .save()
+            .then((saveDish) => {
+              return res.status(200).json({
+                success: "Dish save successfully!!!",
+                data: saveDish,
+              });
+            })
+            .catch((err) => {
+              console.log(err, "createDish");
+              // TODO: handle type error from mongoose and return 400
+              // TODO: handle required error from mongoose and return 400
+              // TODO: handle unique error from mongoose and return 409
+              return res.status(400).json({
+                error: err,
+              });
+            });
+        })
+        .catch((err) => {
+          return res.status(400).json({
+            message: "Order cannot find!!!",
+          });
+        });
     })
     .catch((err) => {
-      console.log(err, "createDish");
-      // TODO: handle type error from mongoose and return 400
-      // TODO: handle required error from mongoose and return 400
-      // TODO: handle unique error from mongoose and return 409
       return res.status(400).json({
-        error: err,
+        message: "Restaurant cannot find",
       });
     });
 };
