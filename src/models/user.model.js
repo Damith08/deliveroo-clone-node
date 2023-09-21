@@ -1,4 +1,7 @@
 const mongoose = require("mongoose");
+
+// Use constants here
+const { DB_COLLECTIONS } = require("../constants");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -34,4 +37,4 @@ const userSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model(DB_COLLECTIONS.USER, userSchema);
