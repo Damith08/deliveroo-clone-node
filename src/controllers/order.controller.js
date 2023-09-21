@@ -21,6 +21,27 @@ exports.getAllOrders = (req, res) => {
     });
 };
 
+// get a single order
+exports.getOrder = (req, res) => {
+  Order.findById(req.params.findById)
+    .exec()
+    .then((order) => {
+      return res.status(200).json({
+        success: "Get a order!",
+        existingDishes: order,
+      });
+    })
+    .catch((err) => {
+      console.log(err, "find order");
+      // TODO: handle type error from mongoose and return 400
+      // TODO: handle required error from mongoose and return 400
+      // TODO: handle unique error from mongoose and return 409
+      return res.status(400).json({
+        error: err,
+      });
+    });
+};
+
 // create a new order
 exports.createOrder = (req, res) => {
   const newOrder = new Order({
