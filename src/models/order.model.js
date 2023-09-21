@@ -8,8 +8,7 @@ const Schema = mongoose.Schema;
 const orderSchema = new Schema(
   {
     quantity: { type: Number, required: true },
-    placed_on: { type: Date, required: true },
-    total_price: { type: Number, required: true },
+    totalPrice: { type: Number, required: true },
     user: {
       type: Schema.Types.ObjectId,
       ref: DB_COLLECTIONS.USER,
@@ -20,7 +19,11 @@ const orderSchema = new Schema(
       ref: DB_COLLECTIONS.RESTAURANT,
       required: true,
     },
-    dish: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    dish: {
+      type: Schema.Types.ObjectId,
+      ref: DB_COLLECTIONS.DISH,
+      required: true,
+    },
   },
   { timestamps: true },
 );
