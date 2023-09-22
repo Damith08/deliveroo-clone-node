@@ -1,33 +1,36 @@
+const bcrypt = require("bcrypt");
 const User = require("../models/user.model");
 
 // create user
 exports.createUser = (req, res) => {
-  const newUser = new User({
-    firstName: req.body.first_name,
-    lastName: req.body.last_name,
-    email: req.body.email,
-    password: req.body.password,
-    address: req.body.address,
-    contact: req.body.contact,
-  });
-
-  newUser
-    .save()
-    .then((savedUser) => {
-      return res.status(200).json({
-        success: "Restaurant saved successfully!",
-        data: savedUser,
-      });
-    })
-    .catch((err) => {
-      console.log(err, "createUser");
-      // TODO: handle type error from mongoose and return 400
-      // TODO: handle required error from mongoose and return 400
-      // TODO: handle unique error from mongoose and return 409
-      return res.status(400).json({
-        error: err,
-      });
+  bcrypt.hash(req.body.password, 10).then((hash) => {
+    const newUser = new User({
+      firstName: req.body.first_name,
+      lastName: req.body.last_name,
+      email: req.body.email,
+      password: hash,
+      address: req.body.address,
+      contact: req.body.contact,
     });
+
+    newUser
+      .save()
+      .then((savedUser) => {
+        return res.status(200).json({
+          success: "Restaurant saved successfully!",
+          data: savedUser,
+        });
+      })
+      .catch((err) => {
+        console.log(err, "createUser");
+        // TODO: handle type error from mongoose and return 400
+        // TODO: handle required error from mongoose and return 400
+        // TODO: handle unique error from mongoose and return 409
+        return res.status(400).json({
+          error: err,
+        });
+      });
+  });
 };
 
 // get all restaurants data
