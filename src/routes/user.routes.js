@@ -13,6 +13,9 @@ userRouter.get("/:id", (req, res) => {
 // post /users - create a new user
 userRouter.post("/", userController.createUser);
 
+// Authentication
+userRouter.post("/login", userController.loginUser);
+
 // patch /users/:id - update a user partially
 userRouter.patch("/:id", (req, res) => {
   res.send("update a user partially");
