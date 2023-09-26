@@ -1,6 +1,7 @@
 exports.DB_COLLECTIONS = {
-  USER: "User",
-  RESTAURANT: "Restaurant",
-  DISH: "Dish",
-  ORDER: "Order",
+  USER: "users",
+  RESTAURANT: "restaurants",
+  DISH: "dishes",
+  DISH_CATEGORY: "dish-categories",
+  ORDER: "orders",
 };

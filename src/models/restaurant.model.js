@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
-// Use constants here
 const { DB_COLLECTIONS } = require("../constants");
+
+const Schema = mongoose.Schema;
 
 const restaurantSchema = new Schema({
   name: { type: String, required: true },

@@ -2,24 +2,21 @@ const express = require("express");
 const router = express.Router();
 const restaurantController = require("../controllers/restaurant.controller");
 
-// get /restaurants/ - get all restaurants
-// this is working
+// get all restaurants
 router.get("/", restaurantController.getAllRestaurants);
 
-// get /restaurants/:id - get a single restaurant
-// not working
+// get a single restaurant
 router.get("/:id", restaurantController.getRestaurant);
 
-// post /restaurants - create a new restaurant
+// create a new restaurant
 router.post("/", restaurantController.createRestaurant);
 
-// patch /restaurants/:id - update a restaurant partially
-// router.patch("/:id", restaurantController.updateRestaurant);
+// TODO: patch /restaurants/:id - update a restaurant partially
 
-// put /restaurants/:id - update a restaurant completely
+// update a restaurant completely
 router.put("/:id", restaurantController.updateRestaurant);
 
-// delete /restaurants/:id - delete a restaurant
+// delete a restaurant
 router.delete("/:id", restaurantController.deleteRestaurant);
 
 module.exports = router;

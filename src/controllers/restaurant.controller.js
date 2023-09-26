@@ -1,18 +1,15 @@
-const Restaurant = require("../models/restaurant.model");
-
+const restaurantService = require("../services/restaurant.database.service");
 // create restaurant
 exports.createRestaurant = (req, res) => {
-  const newRestaurant = new Restaurant({
-    name: req.body.name,
-    // example for kebab style
-    // firstName: req.body.first_name,
-    address: req.body.address,
-    email: req.body.email,
-    contact: req.body.contact,
-  });
-
-  newRestaurant
-    .save()
+  restaurantService
+    .createNewRestaurant({
+      name: req.body.name,
+      // example for kebab style
+      // firstName: req.body.first_name,
+      address: req.body.address,
+      email: req.body.email,
+      contact: req.body.contact,
+    })
     .then((savedRestaurant) => {
       return res.status(200).json({
         success: "Restaurant saved successfully!",
@@ -32,12 +29,13 @@ exports.createRestaurant = (req, res) => {
 
 // get all restaurants data
 exports.getAllRestaurants = (req, res) => {
-  Restaurant.find()
-    .exec()
-    .then((allRestaurants) => {
+  restaurantService
+    .findAllRestaurants()
+    .then((data) => {
       return res.status(200).json({
-        success: "Get all restaurants Success!!",
-        existingRestaurants: allRestaurants,
+        success: true,
+        message: "Success",
+        data: data,
       });
     })
     .catch((err) => {
@@ -45,19 +43,23 @@ exports.getAllRestaurants = (req, res) => {
       // TODO: handle type error from mongoose and return 400
       // TODO: handle required error from mongoose and return 400
       // TODO: handle unique error from mongoose and return 409
-      return res.status(400).json({
-        error: err,
+      return res.status(500).json({
+        success: false,
+        message: "Internal server error",
+        data: err,
       });
     });
 };
 
 // get restaurant data
 exports.getRestaurant = (req, res) => {
-  Restaurant.findById(id)
-    .exec()
+  const id = req.params.id;
+  restaurantService
+    .findRestaurantById(id)
     .then((restaurant) => {
       return res.status(200).json({
-        success: "Get restaurant Success!!",
+        success: true,
+        message: "Success",
         data: restaurant,
       });
     })
@@ -66,20 +68,25 @@ exports.getRestaurant = (req, res) => {
       // TODO: handle type error from mongoose and return 400
       // TODO: handle required error from mongoose and return 400
       // TODO: handle unique error from mongoose and return 409
-      return res.status(400).json({
-        error: err,
+      return res.status(500).json({
+        success: false,
+        message: "Internal server error",
+        data: err,
       });
     });
 };
 
 // Update restaurant
 exports.updateRestaurant = (req, res) => {
-  Restaurant.findByIdAndUpdate(req.params.id, {
-    $set: req.body,
-  })
+  const id = req.params.id;
+  restaurantService
+    .findRestaurantAndUpdate(id, {
+      $set: req.body,
+    })
     .then((updateRestaurant) => {
       return res.status(200).json({
-        success: "Updated Successfully!!!",
+        success: true,
+        message: "Success",
         data: updateRestaurant,
       });
     })
@@ -89,25 +96,31 @@ exports.updateRestaurant = (req, res) => {
       // TODO: handle required error from mongoose and return 400
       // TODO: handle unique error from mongoose and return 409
       return res.status(400).json({
-        error: err,
+        success: false,
+        message: "Internal server error",
+        data: err,
       });
     });
 };
 
 // Delete Restaurant
 exports.deleteRestaurant = (req, res) => {
-  Restaurant.findByIdAndRemove(req.params.id)
-    .exec()
+  const id = req.params.id;
+  restaurantService
+    .findRestaurantAndDelete(id)
     .then((deleteRestaurant) => {
       return res.status(200).json({
-        success: "Restaurant Deleted!!!",
+        success: true,
+        message: "Success",
         data: deleteRestaurant,
       });
     })
     .catch((err) => {
       console.log(err, "Cannot delete");
       return res.status(400).json({
-        error: err,
+        success: false,
+        message: "Internal server error",
+        data: err,
       });
     });
 };
