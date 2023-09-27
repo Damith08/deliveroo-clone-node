@@ -1,4 +1,4 @@
-const User = require("../models/user.model");
+const userDatabaseService = require("../services/user.database.service");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -6,20 +6,19 @@ const jwt = require("jsonwebtoken");
 exports.createUser = (req, res) => {
   // hash password with Bcrypt
   bcrypt.hash(req.body.password, 10).then((hash) => {
-    const newUser = new User({
-      firstName: req.body.first_name,
-      lastName: req.body.last_name,
-      email: req.body.email,
-      password: hash,
-      address: req.body.address,
-      contact: req.body.contact,
-    });
-
-    newUser
-      .save()
+    userDatabaseService
+      .createNewUser({
+        firstName: req.body.first_name,
+        lastName: req.body.last_name,
+        email: req.body.email,
+        password: hash,
+        address: req.body.address,
+        contact: req.body.contact,
+      })
       .then((savedUser) => {
         return res.status(200).json({
-          success: "Restaurant saved successfully!",
+          success: true,
+          message: "Success",
           data: savedUser,
         });
       })
@@ -29,7 +28,9 @@ exports.createUser = (req, res) => {
         // TODO: handle required error from mongoose and return 400
         // TODO: handle unique error from mongoose and return 409
         return res.status(400).json({
-          error: err,
+          success: false,
+          message: "Internal server error",
+          data: err,
         });
       });
   });
@@ -65,14 +66,14 @@ exports.loginUser = (req, res) => {
     });
 };
 
-// get all restaurants data
+// get all users data
 exports.getAllUsers = (req, res) => {
-  User.find()
-    .exec()
+  userDatabaseService.findAllUsers
     .then((allUsers) => {
       return res.status(200).json({
-        success: "Get all Users Success!!",
-        existingUsers: allUsers,
+        success: true,
+        message: "Success",
+        data: allUsers,
       });
     })
     .catch((err) => {
@@ -81,19 +82,24 @@ exports.getAllUsers = (req, res) => {
       // TODO: handle required error from mongoose and return 400
       // TODO: handle unique error from mongoose and return 409
       return res.status(400).json({
-        error: err,
+        success: false,
+        message: "Internal server error",
+        data: err,
       });
     });
 };
 
 // Update user
 exports.updateUser = (req, res) => {
-  User.findByIdAndUpdate(req.params.id, {
-    $set: req.body,
-  })
+  const id = req.params.id;
+  userDatabaseService
+    .findAndUpdateUser(id, {
+      $set: req.body,
+    })
     .then((updateUser) => {
       return res.status(200).json({
-        success: "Updated Successfully!!!",
+        success: true,
+        message: "Success",
         data: updateUser,
       });
     })
@@ -103,18 +109,22 @@ exports.updateUser = (req, res) => {
       // TODO: handle required error from mongoose and return 400
       // TODO: handle unique error from mongoose and return 409
       return res.status(400).json({
-        error: err,
+        success: false,
+        message: "Internal server error",
+        data: err,
       });
     });
 };
 
 // Delete user
 exports.deleteUser = (req, res) => {
-  User.findByIdAndDelete(req.params.id)
-    .exec()
+  const id = req.params.id;
+  userDatabaseService
+    .findAndDeleteUser(id)
     .then((userDelete) => {
       return res.status(200).json({
-        success: "User Deleted!!!",
+        success: true,
+        message: "Success",
         data: userDelete,
       });
     })
@@ -123,7 +133,9 @@ exports.deleteUser = (req, res) => {
       // TODO: handle required error from mongoose and return 400
       // TODO: handle unique error from mongoose and return 409
       return res.status(400).json({
-        error: err,
+        success: false,
+        message: "Internal server error",
+        data: err,
       });
     });
 };

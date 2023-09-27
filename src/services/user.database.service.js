@@ -1,4 +1,5 @@
-// Is it required to import user model here?
+const User = require("../models/user.model");
+
 exports.findUserById = (id) => {
   return User.find()
     .exec()
@@ -12,4 +13,24 @@ exports.findUserById = (id) => {
         error: err,
       });
     });
+};
+// create new user
+exports.createNewUser = (id) => {
+  const newUser = new User(id);
+  return newUser.save();
+};
+
+// get all users
+exports.findAllUsers = () => {
+  return User.find().exec();
+};
+
+// update user
+exports.findAndUpdateUser = (id) => {
+  return User.findByIdAndUpdate(id).exec();
+};
+
+// delete user
+exports.findAndDeleteUser = (id) => {
+  return User.findByIdAndDelete(id).exec();
 };

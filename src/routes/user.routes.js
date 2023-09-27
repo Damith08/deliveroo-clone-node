@@ -2,29 +2,25 @@ const express = require("express");
 const userRouter = express.Router();
 const userController = require("../controllers/user.controller");
 
-// get /users/ - get all users
+// get all users
 userRouter.get("/", userController.getAllUsers);
 
-// get /users/:id - get a single user
-userRouter.get("/:id", (req, res) => {
-  res.send("get a single user");
-});
+// TODO: get a single user
+// userRouter.get("/:id", userController.GETssingleuSER);
 
-// post /users - create a new user
+// create a new user
 userRouter.post("/", userController.createUser);
 
 // Authentication
 userRouter.post("/login", userController.loginUser);
 
-// patch /users/:id - update a user partially
-userRouter.patch("/:id", (req, res) => {
-  res.send("update a user partially");
-});
+// TODO: update a user partially
+// userRouter.patch("/:id", userController.loginUser);
 
-// put /users/:id - update a user completely
+// update a user completely
 userRouter.put("/:id", userController.updateUser);
 
-// delete /users/:id - delete a user
+// delete a user
 userRouter.delete("/:id", userController.deleteUser);
 
 module.exports = userRouter;
