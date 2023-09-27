@@ -1,16 +1,27 @@
-exports.findDishById = (id) => {
-  return Dish.find()
-    .exec()
-    .then((foundDish) => {
-      return res.status(200).json({
-        success: "Dish found successfully!!!",
-      });
-    })
-    .catch((err) => {
-      return res.status(400).json({ error: er });
-    });
+const Dish = require("../models/dish.model");
+
+// find all Dishes
+exports.findAllDishes = () => {
+  return Dish.find().exec();
 };
 
-exports.deleDish = (id) => {
-  return Dish.findbyid().exec();
+// find a single dish
+exports.findDishById = (id) => {
+  return Dish.findById(id).exec();
+};
+
+// create a dish
+exports.createNewDish = (dish) => {
+  const newDish = new Dish(dish);
+  return newDish.save();
+};
+
+// find and update a dish
+exports.findDishAndUpdate = (id) => {
+  return Dish.findByIdAndUpdate(id).exec();
+};
+
+// find and delete a dish
+exports.findDishAndDelete = (id) => {
+  return Dish.findByIdAndDelete(id).exec();
 };

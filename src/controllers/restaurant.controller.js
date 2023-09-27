@@ -12,7 +12,8 @@ exports.createRestaurant = (req, res) => {
     })
     .then((savedRestaurant) => {
       return res.status(200).json({
-        success: "Restaurant saved successfully!",
+        success: true,
+        message: "Success",
         data: savedRestaurant,
       });
     })
@@ -22,7 +23,9 @@ exports.createRestaurant = (req, res) => {
       // TODO: handle required error from mongoose and return 400
       // TODO: handle unique error from mongoose and return 409
       return res.status(400).json({
-        error: err,
+        success: false,
+        message: "Internal server error",
+        data: err,
       });
     });
 };

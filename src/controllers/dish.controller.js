@@ -1,14 +1,16 @@
-const Dish = require("../models/dish.model");
+const dishDatabaseService = require("../services/dish.database.service");
 const restaurantDatabaseService = require("../services/restaurant.database.service");
 const orderDatabaseService = require("../services/order.database.service");
+
 // get all dishes data
 exports.getAllDishes = (req, res) => {
-  Dish.find()
-    .exec()
+  dishDatabaseService
+    .findAllDishes()
     .then((allDishes) => {
       return res.status(200).json({
-        success: "Get all dishes!",
-        existingDishes: allDishes,
+        success: true,
+        message: "Success",
+        data: allDishes,
       });
     })
     .catch((err) => {
@@ -17,19 +19,23 @@ exports.getAllDishes = (req, res) => {
       // TODO: handle required error from mongoose and return 400
       // TODO: handle unique error from mongoose and return 409
       return res.status(400).json({
-        error: err,
+        success: false,
+        message: "Internal server error",
+        data: err,
       });
     });
 };
 
 // get a dish data
 exports.getDish = (req, res) => {
-  Dish.findById(req.params.findById)
-    .exec()
+  const id = req.params.id;
+  dishDatabaseService
+    .findDishById(id)
     .then((dish) => {
       return res.status(200).json({
-        success: "Get a dish!",
-        existingDishes: dish,
+        success: true,
+        message: "Success",
+        data: dish,
       });
     })
     .catch((err) => {
@@ -38,7 +44,9 @@ exports.getDish = (req, res) => {
       // TODO: handle required error from mongoose and return 400
       // TODO: handle unique error from mongoose and return 409
       return res.status(400).json({
-        error: err,
+        success: false,
+        message: "Internal server error",
+        data: err,
       });
     });
 };
@@ -51,18 +59,17 @@ exports.createDish = (req, res) => {
       orderDatabaseService
         .findOrderById(req.body.order_id)
         .then((foundOrder) => {
-          const newDish = new Dish({
-            name: req.body.name,
-            price: req.body.price,
-            restaurant: foundRestaurant._id,
-            order: foundOrder._id,
-          });
-
-          newDish
-            .save()
+          dishDatabaseService
+            .createNewDish({
+              name: req.body.name,
+              price: req.body.price,
+              restaurant: foundRestaurant._id,
+              order: foundOrder._id,
+            })
             .then((saveDish) => {
               return res.status(200).json({
-                success: "Dish save successfully!!!",
+                success: true,
+                message: "Success",
                 data: saveDish,
               });
             })
@@ -72,31 +79,40 @@ exports.createDish = (req, res) => {
               // TODO: handle required error from mongoose and return 400
               // TODO: handle unique error from mongoose and return 409
               return res.status(400).json({
-                error: err,
+                success: false,
+                message: "Internal server error",
+                data: err,
               });
             });
         })
         .catch((err) => {
           return res.status(400).json({
-            message: "Order cannot find!!!",
+            success: false,
+            message: "Internal server error",
+            data: err,
           });
         });
     })
     .catch((err) => {
       return res.status(400).json({
-        message: "Restaurant cannot find",
+        success: false,
+        message: "Internal server error",
+        data: err,
       });
     });
 };
 
 // update dish
 exports.updateDish = (req, res) => {
-  Dish.findByIdAndUpdate(req.params.id, {
-    $set: req.body,
-  })
+  const id = req.params.id;
+  dishDatabaseService
+    .findDishAndUpdate(id, {
+      $set: req.body,
+    })
     .then((dishUpdated) => {
       return res.status(200).json({
-        success: "Dish updated successfully!!!",
+        success: true,
+        message: "Success",
         data: dishUpdated,
       });
     })
@@ -106,18 +122,22 @@ exports.updateDish = (req, res) => {
       // TODO: handle required error from mongoose and return 400
       // TODO: handle unique error from mongoose and return 409
       return res.status(400).json({
-        error: err,
+        success: false,
+        message: "Internal server error",
+        data: err,
       });
     });
 };
 
 // delete dish
 exports.deleteDish = (req, res) => {
-  Dish.findByIdAndDelete(req.params.id)
-    .exec()
+  const id = req.params.id;
+  dishDatabaseService
+    .findDishAndDelete(id)
     .then((dishDelete) => {
       return res.status(200).json({
-        success: "Dish deleted!!!",
+        success: true,
+        message: "Success",
         data: dishDelete,
       });
     })
@@ -126,7 +146,9 @@ exports.deleteDish = (req, res) => {
       // TODO: handle required error from mongoose and return 400
       // TODO: handle unique error from mongoose and return 409
       return res.status(400).json({
-        error: err,
+        success: false,
+        message: "Internal server error",
+        data: err,
       });
     });
 };
