@@ -53,7 +53,7 @@ exports.getDish = (req, res) => {
 // create a dish
 exports.createDish = (req, res) => {
   dishCategoryDatabaseService
-    .findDishCategoryById(req.body.dishCategory_id)
+    .findDishCategory(req.body.dishCategory_id)
     .then((foundDishCategory) => {
       dishDatabaseService
         .createNewDish({

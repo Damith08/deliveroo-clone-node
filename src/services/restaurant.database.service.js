@@ -13,10 +13,10 @@ exports.createNewRestaurant = (data) => {
   return newRestaurant.save();
 };
 
-exports.findRestaurantAndUpdate = (id) => {
+exports.findRestaurantByIdAndUpdate = (id) => {
   return Restaurant.findByIdAndUpdate(id).exec();
 };
 
-exports.findRestaurantAndDelete = (id) => {
+exports.findRestaurantByIdAndDelete = (id) => {
   return Restaurant.findByIdAndDelete(id).exec();
 };
