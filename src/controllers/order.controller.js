@@ -19,7 +19,7 @@ exports.getAllOrders = (req, res) => {
       // TODO: handle type error from mongoose and return 400
       // TODO: handle required error from mongoose and return 400
       // TODO: handle unique error from mongoose and return 409
-      return res.status(400).json({
+      return res.status(500).json({
         success: false,
         message: "Internal server error",
         data: err,
@@ -44,7 +44,7 @@ exports.getOrder = (req, res) => {
       // TODO: handle type error from mongoose and return 400
       // TODO: handle required error from mongoose and return 400
       // TODO: handle unique error from mongoose and return 409
-      return res.status(400).json({
+      return res.status(500).json({
         success: false,
         message: "Internal server error",
         data: err,
@@ -73,7 +73,7 @@ exports.createOrder = (req, res) => {
                   user: foundUser._id,
                 })
                 .then((saveOrder) => {
-                  return res.status(200).json({
+                  return res.status(201).json({
                     success: true,
                     message: "Success",
                     data: saveOrder,
@@ -84,7 +84,7 @@ exports.createOrder = (req, res) => {
                   // TODO: handle type error from mongoose and return 400
                   // TODO: handle required error from mongoose and return 400
                   // TODO: handle unique error from mongoose and return 409
-                  return res.status(400).json({
+                  return res.status(500).json({
                     success: false,
                     message: "Internal server error",
                     data: err,
@@ -93,7 +93,7 @@ exports.createOrder = (req, res) => {
             });
         })
         .catch((err) => {
-          return res.status(400).json({
+          return res.status(500).json({
             success: false,
             message: "Internal server error",
             data: err,
@@ -101,7 +101,7 @@ exports.createOrder = (req, res) => {
         });
     })
     .catch((err) => {
-      return res.status(404).json({
+      return res.status(500).json({
         success: false,
         message: "Internal server error",
         data: err,
@@ -113,7 +113,14 @@ exports.createOrder = (req, res) => {
 exports.updateOrder = (req, res) => {
   const id = req.params.id;
   orderDatabaseService
-    .findOrderAndUpdate(id, { $set: req.body })
+    .findOrderByIdAndUpdate(id, {
+      quantity: req.body.quantity,
+      timestamps: new Date(),
+      totalPrice: req.body.total_price,
+      dish: foundDIsh._id,
+      restaurant: foundRestaurant._id,
+      user: foundUser._id,
+    })
     .then((orderUpdate) => {
       return res.status(200).json({
         success: false,
@@ -126,7 +133,7 @@ exports.updateOrder = (req, res) => {
       // TODO: handle type error from mongoose and return 400
       // TODO: handle required error from mongoose and return 400
       // TODO: handle unique error from mongoose and return 409
-      return res.status(400).json({
+      return res.status(500).json({
         success: false,
         message: "Internal server error",
         data: err,
@@ -138,7 +145,7 @@ exports.updateOrder = (req, res) => {
 exports.deleteOrder = (req, res) => {
   const id = req.params.id;
   orderDatabaseService
-    .findOrderAndDelete(id)
+    .findOrderByIdAndDelete(id)
     .then((orderDelete) => {
       return res.status(200).json({
         success: true,
@@ -150,7 +157,7 @@ exports.deleteOrder = (req, res) => {
       console.log(err, "deleteOrder");
       // TODO: handle required error from mongoose and return 400
       // TODO: handle unique error from mongoose and return 409
-      return res.status(400).json({
+      return res.status(500).json({
         success: false,
         message: "Internal server error",
         data: err,
