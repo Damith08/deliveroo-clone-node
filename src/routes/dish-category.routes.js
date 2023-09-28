@@ -16,7 +16,7 @@ dishCategoryRouter.post("/:id", dishCategoryController.createDishCategory);
 // update a dish completely
 dishCategoryRouter.put("/:id", dishCategoryController.updateDishCategory);
 
-// // delete /dishes/:id - delete a dish
-// dishCategoryRouter.delete("/:id", dishController.deleteDish);
+// delete a dish
+dishCategoryRouter.delete("/:id", dishCategoryController.deleteDishCategory);
 
 module.exports = dishCategoryRouter;
