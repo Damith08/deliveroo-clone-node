@@ -2,13 +2,17 @@ const express = require("express");
 const commonRouter = express.Router();
 
 commonRouter.get("/", (req, res) => {
-  res.send("Home page");
+  res.status(200).json({
+    success: true,
+    message: "API IS RUNNING ",
+  });
 });
 
 commonRouter.get("*", (req, res) => {
-  res.send("Route not found");
+  res.status(404).json({
+    success: false,
+    message: "Route not found",
+  });
 });
 
 module.exports = commonRouter;
-
-// GROUTER.ANY(#*) ROUTE NOT FOUND
