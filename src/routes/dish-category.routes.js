@@ -9,7 +9,7 @@ dishCategoryRouter.get("/", dishCategoryController.getAllDishCategories);
 dishCategoryRouter.get("/:id", dishCategoryController.getDishCategory);
 
 // create a new dish
-dishCategoryRouter.post("/:id", dishCategoryController.createDishCategory);
+dishCategoryRouter.post("/", dishCategoryController.createDishCategory);
 
 // // patch /dishes/:id - update a dish partially
 

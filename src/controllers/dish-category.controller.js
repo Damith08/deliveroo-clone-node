@@ -28,7 +28,7 @@ exports.getAllDishCategories = (req, res) => {
 exports.getDishCategory = (req, res) => {
   const id = req.params.id;
   dishCategoryDatabaseService
-    .getDishCategory(id)
+    .findDishCategory(id)
     .then((dishCategory) => {
       return res.status(200).json({
         success: true,
@@ -54,8 +54,7 @@ exports.createDishCategory = (req, res) => {
   dishCategoryDatabaseService
     .createNewDishCategory({
       name: req.body.name,
-      restaurant: foundRestaurant._id,
-      dish: foundDish._id,
+      timestamps: new Date(),
     })
     .then((saveDishCategory) => {
       return res.status(201).json({
@@ -82,7 +81,7 @@ exports.updateDishCategory = (req, res) => {
   const id = req.params.id;
   dishCategoryDatabaseService
     .findDishCategoryByIdAndUpdate(id, {
-      $set: req.body,
+      name: req.body.name,
     })
     .then((dishCategoryUpdate) => {
       return res.status(200).json({
