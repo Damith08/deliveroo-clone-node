@@ -9,9 +9,10 @@ dishRouter.get("/", dishController.getAllDishes);
 dishRouter.get("/:id", dishController.getDish);
 
 // create a new dish
-dishRouter.post("/:id", dishController.createDish);
+dishRouter.post("/", dishController.createDish);
 
-// TODO: patch /dishes/:id - update a dish partially
+// update a dish partially
+dishRouter.put("/:id", dishController.updateDishPartially);
 
 // update a dish completely
 dishRouter.put("/:id", dishController.updateDish);

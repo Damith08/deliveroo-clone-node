@@ -7,7 +7,12 @@ const { DB_COLLECTIONS } = require("../constants");
 const dishSchema = new Schema(
   {
     name: { type: String, required: true },
-    price: { type: String, required: true },
+    price: { type: Number, required: true },
+    restaurant: {
+      type: Schema.Types.ObjectId,
+      ref: DB_COLLECTIONS.RESTAURANT,
+      required: true,
+    },
     dishCategory: {
       type: Schema.Types.ObjectId,
       ref: DB_COLLECTIONS.DISH_CATEGORY,
