@@ -6,11 +6,6 @@ const Schema = mongoose.Schema;
 const restaurantSchema = new Schema(
   {
     name: { type: String, required: true },
-    dish: {
-      type: Schema.Types.ObjectId,
-      ref: DB_COLLECTIONS.DISH,
-      required: true,
-    },
     address: { type: String, required: true },
     email: { type: String, require: true, unique: true },
     contact: { type: Number, required: true },

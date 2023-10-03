@@ -11,7 +11,8 @@ router.get("/:id", restaurantController.getRestaurant);
 // create a new restaurant
 router.post("/", restaurantController.createRestaurant);
 
-// TODO: patch /restaurants/:id - update a restaurant partially
+// update a restaurant partially
+router.patch("/:id", restaurantController.updateRestaurantPartially);
 
 // update a restaurant completely
 router.put("/:id", restaurantController.updateRestaurant);

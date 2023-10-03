@@ -13,6 +13,10 @@ exports.createNewRestaurant = (data) => {
   return newRestaurant.save();
 };
 
+exports.findRestaurantByIdAndUpdatePartially = (id) => {
+  return Restaurant.findByIdAndUpdate(id).exec();
+};
+
 exports.findRestaurantByIdAndUpdate = (id) => {
   return Restaurant.findByIdAndUpdate(id).exec();
 };
