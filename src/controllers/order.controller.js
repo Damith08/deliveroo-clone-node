@@ -56,7 +56,7 @@ exports.getOrder = (req, res) => {
 exports.createOrder = (req, res) => {
   dishDatabaseService
     .findDishById(req.body.dish_id)
-    .then((foundDIsh) => {
+    .then((foundDish) => {
       restaurantDatabaseService
         .findRestaurantById(req.body.restaurant_id)
         .then((foundRestaurant) => {
@@ -68,7 +68,7 @@ exports.createOrder = (req, res) => {
                   quantity: req.body.quantity,
                   timestamps: new Date(),
                   totalPrice: req.body.total_price,
-                  dish: foundDIsh._id,
+                  dish: foundDish._id,
                   restaurant: foundRestaurant._id,
                   user: foundUser._id,
                 })
@@ -101,6 +101,36 @@ exports.createOrder = (req, res) => {
         });
     })
     .catch((err) => {
+      return res.status(500).json({
+        success: false,
+        message: "Internal server error",
+        data: err,
+      });
+    });
+};
+
+// update order partially
+exports.updateOrderPartially = (req, res) => {
+  const id = req.params.id;
+  orderDatabaseService
+    .findOrderByIdAndUpdate(id, {
+      quantity: req.body.quantity,
+      dish: foundDIsh._id,
+      restaurant: foundRestaurant._id,
+      user: foundUser._id,
+    })
+    .then((orderUpdate) => {
+      return res.status(200).json({
+        success: false,
+        message: "Internal server error",
+        data: orderUpdate,
+      });
+    })
+    .catch((err) => {
+      console.log(err, "updateOrder");
+      // TODO: handle type error from mongoose and return 400
+      // TODO: handle required error from mongoose and return 400
+      // TODO: handle unique error from mongoose and return 409
       return res.status(500).json({
         success: false,
         message: "Internal server error",

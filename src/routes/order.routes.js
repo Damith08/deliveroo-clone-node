@@ -11,7 +11,8 @@ orderRouter.get("/:id", orderController.getOrder);
 // create a new order
 orderRouter.post("/", orderController.createOrder);
 
-// TODO: patch /orders/:id - update a order partially
+//update a order partially
+orderRouter.patch("/:id", orderController.updateOrderPartially);
 
 // update a order completely
 orderRouter.put("/:id", orderController.updateOrder);
