@@ -11,8 +11,8 @@ userRouter.get("/:id", userController.getUser);
 // create a new user
 userRouter.post("/", userController.createUser);
 
-// TODO: update a user partially
-// userRouter.patch("/:id", userController.loginUser);
+// update a user partially
+userRouter.patch("/:id", userController.updateUserPartially);
 
 // update a user completely
 userRouter.put("/:id", userController.updateUser);
