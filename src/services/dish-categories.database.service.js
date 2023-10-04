@@ -13,8 +13,10 @@ exports.createNewDishCategory = (dishCategory) => {
   return newDishCategory.save();
 };
 
-exports.findDishCategoryByIdAndUpdate = (id) => {
-  return DishCategory.findByIdAndUpdate(id).exec();
+exports.findDishCategoryByIdAndUpdate = (id, data) => {
+  return DishCategory.findByIdAndUpdate(id, data, {
+    returnDocument: "after",
+  }).exec();
 };
 
 exports.findDishCategoryByIdAndDelete = (id) => {
