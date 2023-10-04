@@ -1,14 +1,15 @@
 const userDatabaseService = require("../services/user.database.service");
-const passwordHashDatabaseService = require("../services/hash.database.service");
+const passwordService = require("../services/password.service");
 
 // create user
 exports.createUser = (req, res) => {
-  passwordHashDatabaseService.passwordHash().then((hash) => {
+  passwordService.passwordHash(req.body.password).then((hash) => {
     userDatabaseService
       .createNewUser({
         firstName: req.body.first_name,
         lastName: req.body.last_name,
         email: req.body.email,
+        username: req.body.username,
         password: hash,
         address: req.body.address,
         contact: req.body.contact,
@@ -35,8 +36,10 @@ exports.createUser = (req, res) => {
 };
 
 // get all users data
+// FIXME: remove password
 exports.getAllUsers = (req, res) => {
-  userDatabaseService.findAllUsers
+  userDatabaseService
+    .findAllUsers()
     .then((allUsers) => {
       return res.status(200).json({
         success: true,
@@ -58,6 +61,7 @@ exports.getAllUsers = (req, res) => {
 };
 
 // get single user data
+// FIXME: remove password
 exports.getUser = (req, res) => {
   const id = req.params.id;
   userDatabaseService
@@ -71,6 +75,35 @@ exports.getUser = (req, res) => {
     })
     .catch((err) => {
       console.log(err, "find user");
+      // TODO: handle type error from mongoose and return 400
+      // TODO: handle required error from mongoose and return 400
+      // TODO: handle unique error from mongoose and return 409
+      return res.status(500).json({
+        success: false,
+        message: "Internal server error",
+        data: err,
+      });
+    });
+};
+
+// Update user
+exports.updateUserPartially = (req, res) => {
+  const id = req.params.id;
+  userDatabaseService
+    .findUserByIdAndUpdate(id, {
+      firstName: req.body.first_name,
+      lastName: req.body.last_name,
+      email: req.body.email,
+    })
+    .then((updateUser) => {
+      return res.status(200).json({
+        success: true,
+        message: "Success",
+        data: updateUser,
+      });
+    })
+    .catch((err) => {
+      console.log(err, "Cannot update");
       // TODO: handle type error from mongoose and return 400
       // TODO: handle required error from mongoose and return 400
       // TODO: handle unique error from mongoose and return 409

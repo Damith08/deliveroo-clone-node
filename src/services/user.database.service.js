@@ -4,8 +4,8 @@ exports.findUserById = (id) => {
   return User.findById(id).exec();
 };
 
-exports.createNewUser = (id) => {
-  const newUser = new User(id);
+exports.createNewUser = (data) => {
+  const newUser = new User(data);
   return newUser.save();
 };
 
@@ -13,8 +13,8 @@ exports.findAllUsers = () => {
   return User.find().exec();
 };
 
-exports.findUserByIdAndUpdate = (id) => {
-  return User.findByIdAndUpdate(id).exec();
+exports.findUserByIdAndUpdate = (id, data) => {
+  return User.findByIdAndUpdate(id, data, { returnDocument: "after" }).exec();
 };
 
 exports.findUserByIdAndDelete = (id) => {
