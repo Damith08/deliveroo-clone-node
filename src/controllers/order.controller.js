@@ -57,48 +57,68 @@ exports.createOrder = (req, res) => {
   dishDatabaseService
     .findDishById(req.body.dish_id)
     .then((foundDish) => {
-      restaurantDatabaseService
-        .findRestaurantById(req.body.restaurant_id)
-        .then((foundRestaurant) => {
-          userDatabaseService
-            .findUserById(req.body.user_id)
-            .then((foundUser) => {
-              orderDatabaseService
-                .createNewOrder({
-                  quantity: req.body.quantity,
-                  timestamps: new Date(),
-                  totalPrice: req.body.total_price,
-                  dish: foundDish._id,
-                  restaurant: foundRestaurant._id,
-                  user: foundUser._id,
-                })
-                .then((saveOrder) => {
-                  return res.status(201).json({
-                    success: true,
-                    message: "Success",
-                    data: saveOrder,
-                  });
-                })
-                .catch((err) => {
-                  console.log(err, "createOrder");
-                  // TODO: handle type error from mongoose and return 400
-                  // TODO: handle required error from mongoose and return 400
-                  // TODO: handle unique error from mongoose and return 409
-                  return res.status(500).json({
-                    success: false,
-                    message: "Internal server error",
-                    data: err,
-                  });
-                });
-            });
-        })
-        .catch((err) => {
-          return res.status(500).json({
-            success: false,
-            message: "Internal server error",
-            data: err,
-          });
+      if (!foundDish) {
+        return res.status(404).json({
+          message: "Dish not found",
+          data: err,
         });
+      } else {
+        restaurantDatabaseService
+          .findRestaurantById(req.body.restaurant_id)
+          .then((foundRestaurant) => {
+            if (!foundRestaurant) {
+              return res.status(404).json({
+                message: "Restaurant not found",
+                data: err,
+              });
+            } else {
+              userDatabaseService
+                .findUserById(req.body.user_id)
+                .then((foundUser) => {
+                  if (!foundUser) {
+                    return res.status(404).json({
+                      message: "User not found",
+                      data: err,
+                    });
+                  } else {
+                    orderDatabaseService
+                      .createNewOrder({
+                        quantity: req.body.quantity,
+                        totalPrice: req.body.total_price,
+                        dishId: foundDish._id,
+                        restaurantId: foundRestaurant._id,
+                        userId: foundUser._id,
+                      })
+                      .then((saveOrder) => {
+                        return res.status(201).json({
+                          success: true,
+                          message: "Success",
+                          data: saveOrder,
+                        });
+                      })
+                      .catch((err) => {
+                        console.log(err, "createOrder");
+                        // TODO: handle type error from mongoose and return 400
+                        // TODO: handle required error from mongoose and return 400
+                        // TODO: handle unique error from mongoose and return 409
+                        return res.status(500).json({
+                          success: false,
+                          message: "Internal server error",
+                          data: err,
+                        });
+                      });
+                  }
+                });
+            }
+          })
+          .catch((err) => {
+            return res.status(500).json({
+              success: false,
+              message: "Internal server error",
+              data: err,
+            });
+          });
+      }
     })
     .catch((err) => {
       return res.status(500).json({

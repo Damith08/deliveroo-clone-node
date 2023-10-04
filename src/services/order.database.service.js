@@ -13,8 +13,8 @@ exports.createNewOrder = (order) => {
   return newOrder.save();
 };
 
-exports.findOrderByIdAndUpdate = (id) => {
-  return Order.findByIdAndUpdate(id).exec();
+exports.findOrderByIdAndUpdate = (id, data) => {
+  return Order.findByIdAndUpdate(id, data, { returnDocument: "after" }).exec();
 };
 
 exports.findOrderByIdAndDelete = (id) => {
