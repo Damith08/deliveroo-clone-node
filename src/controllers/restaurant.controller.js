@@ -33,11 +33,11 @@ exports.createRestaurant = (req, res) => {
 exports.getAllRestaurants = (req, res) => {
   restaurantService
     .findAllRestaurants()
-    .then((data) => {
+    .then((foundRestaurants) => {
       return res.status(200).json({
         success: true,
         message: "Success",
-        data: data,
+        data: foundRestaurants,
       });
     })
     .catch((err) => {
@@ -82,7 +82,7 @@ exports.getRestaurant = (req, res) => {
 exports.updateRestaurantPartially = (req, res) => {
   const id = req.params.id;
   restaurantService
-    .findRestaurantByIdAndUpdatePartially(id, {
+    .findRestaurantByIdAndUpdate(id, {
       address: req.body.address,
       email: req.body.email,
       contact: req.body.contact,
