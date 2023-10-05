@@ -13,8 +13,8 @@ exports.createNewDish = (dish) => {
   return newDish.save();
 };
 
-exports.findDishByIdAndUpdate = (id) => {
-  return Dish.findByIdAndUpdate(id).exec();
+exports.findDishByIdAndUpdate = (id, data) => {
+  return Dish.findByIdAndUpdate(id, data, { returnDocument: "after" }).exec();
 };
 
 exports.findDishByIdAndDelete = (id) => {

@@ -135,9 +135,7 @@ exports.updateOrderPartially = (req, res) => {
   orderDatabaseService
     .findOrderByIdAndUpdate(id, {
       quantity: req.body.quantity,
-      dish: foundDIsh._id,
-      restaurant: foundRestaurant._id,
-      user: foundUser._id,
+      totalPrice: req.body.total_price,
     })
     .then((orderUpdate) => {
       return res.status(200).json({
@@ -165,11 +163,10 @@ exports.updateOrder = (req, res) => {
   orderDatabaseService
     .findOrderByIdAndUpdate(id, {
       quantity: req.body.quantity,
-      timestamps: new Date(),
       totalPrice: req.body.total_price,
-      dish: foundDIsh._id,
-      restaurant: foundRestaurant._id,
-      user: foundUser._id,
+      dish: req.body.dish_id,
+      restaurant: req.body.restaurant_id,
+      user: req.body.user_id,
     })
     .then((orderUpdate) => {
       return res.status(200).json({

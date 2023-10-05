@@ -54,7 +54,6 @@ exports.createDishCategory = (req, res) => {
   dishCategoryDatabaseService
     .createNewDishCategory({
       name: req.body.name,
-      timestamps: new Date(),
     })
     .then((saveDishCategory) => {
       return res.status(201).json({

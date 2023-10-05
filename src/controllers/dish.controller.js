@@ -56,16 +56,27 @@ exports.createDish = (req, res) => {
   dishCategoryDatabaseService
     .findDishCategory(req.body.dishCategory_id)
     .then((foundDishCategory) => {
+      if (!foundDishCategory) {
+        return res.status(404).json({
+          message: "Dish Category not found",
+          data: err,
+        });
+      }
       restaurantDatabaseService
         .findRestaurantById(req.body.restaurant_id)
         .then((foundRestaurant) => {
+          if (!foundRestaurant) {
+            return res.status(404).json({
+              message: "Restaurant not found",
+              data: err,
+            });
+          }
           dishDatabaseService
             .createNewDish({
               name: req.body.name,
               price: req.body.price,
               dishCategory: foundDishCategory._id,
               restaurant: foundRestaurant._id,
-              timestamps: new Date(),
             })
             .then((saveDish) => {
               return res.status(201).json({
