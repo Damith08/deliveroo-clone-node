@@ -1,11 +1,11 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const authDatabaseService = require("../services/auth.database.service");
+const userDatabaseService = require("../services/user.database.service");
 
 // User login
 exports.loginUser = (req, res) => {
-  authDatabaseService
-    .findUserByEmail(email)
+  userDatabaseService
+    .findUserById(email)
     .then((user) => {
       if (!user) {
         return res.status(401).json({

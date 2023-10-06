@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
 // import routes
+const authRoutes = require("./routes/auth.routes");
 const commonRoutes = require("./routes/common.routes");
 const restaurantRoutes = require("./routes/restaurant.routes");
 const userRoutes = require("./routes/user.routes");
@@ -30,7 +31,7 @@ const port = 3000;
 app.use(bodyParser.json());
 
 // routes
-// app.use("/auth", authRoutes);
+app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/restaurants", restaurantRoutes);
 app.use("/orders", orderRoutes);
