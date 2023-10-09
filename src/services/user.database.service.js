@@ -20,3 +20,7 @@ exports.findUserByIdAndUpdate = (id, data) => {
 exports.findUserByIdAndDelete = (id) => {
   return User.findByIdAndDelete(id).exec();
 };
+
+exports.findUser = (email) => {
+  return User.findOne(email).exec();
+}

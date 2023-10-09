@@ -4,8 +4,9 @@ const userDatabaseService = require("../services/user.database.service");
 
 // User login
 exports.loginUser = (req, res) => {
+  const email = req.body.email;
   userDatabaseService
-    .findUserById(email)
+    .findUser(email)
     .then((user) => {
       if (!user) {
         return res.status(401).json({
@@ -22,13 +23,14 @@ exports.loginUser = (req, res) => {
       }
       const token = jwt.sign(
         { email: user.email, userId: user._id },
-        "secret_password",
+        "secret_long_password",
         { expiresIn: "1h" },
       );
     })
     .catch((err) => {
       return res.status(401).json({
         message: "Auth failed",
+        data: err,
       });
     });
 };
