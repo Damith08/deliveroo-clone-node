@@ -139,8 +139,8 @@ exports.updateOrderPartially = (req, res) => {
     })
     .then((orderUpdate) => {
       return res.status(200).json({
-        success: false,
-        message: "Internal server error",
+        success: true,
+        message: "Success",
         data: orderUpdate,
       });
     })
@@ -170,8 +170,8 @@ exports.updateOrder = (req, res) => {
     })
     .then((orderUpdate) => {
       return res.status(200).json({
-        success: false,
-        message: "Internal server error",
+        success: true,
+        message: "Success",
         data: orderUpdate,
       });
     })
