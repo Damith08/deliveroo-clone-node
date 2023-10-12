@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const userDatabaseService = require("../services/user.database.service");
 const passwordService = require("../services/password.service");
+const jwtService = require("../services/jwt.service");
 
 // User login
 exports.loginUser = (req, res) => {
@@ -23,11 +24,17 @@ exports.loginUser = (req, res) => {
             });
           }
 
-          const token = jwt.sign(
-            { email: user.email, userId: user._id },
-            "secret_long_password",
-            { expiresIn: "1h" },
-          );
+          jwtService.jwtToken(token);
+          // const token = jwt.sign(
+          //   { email: user.email, userId: user._id },
+          //   "secret_long_password",
+          //   { expiresIn: "1h" },
+          // );
+          res.status(200).json({
+            token: token,
+            expiresIn: 3600,
+            userId: user._id,
+          });
         })
         .catch((err) => {
           return res.status(404).json({
