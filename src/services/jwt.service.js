@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken");
+const User = require("../models/user.model")
 
-exports.jwtToken = (token) => {
-  return jwt.sign(token).exec();
-};
+const userEmail = req.body.email 
+const user = {email: userEmail}
+
+jwt.sign(user,)
