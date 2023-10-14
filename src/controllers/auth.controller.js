@@ -1,7 +1,6 @@
-const jwt = require("jsonwebtoken");
 const userDatabaseService = require("../services/user.database.service");
 const passwordService = require("../services/password.service");
-// const jwtService = require("../services/jwt.service");
+const jwtService = require("../services/jwt.service");
 
 // User login
 exports.loginUser = (req, res) => {
@@ -9,14 +8,13 @@ exports.loginUser = (req, res) => {
   userDatabaseService
     .findUser(email)
     .then((user) => {
-      if (!user) {
+      if (!user[0]) {
         return res.status(401).json({
-          message: "Auth failed",
+          message: "Auth failed 1",
         });
       }
-
       passwordService
-        .passwordCompare(req.body.password, user.password)
+        .passwordCompare(req.body.password, user[0].password)
         .then((isValid) => {
           if (!isValid) {
             return res.status(401).json({
@@ -25,27 +23,23 @@ exports.loginUser = (req, res) => {
           }
 
           // jwtService.jwtToken(token);
-          const token = jwt.sign(
-            { email: user.email, userId: user._id },
-            "secret_long_password",
-            { expiresIn: "1h" },
-          );
+          const token = jwtService.getToken(user);
           res.status(200).json({
             token: token,
             expiresIn: 3600,
-            userId: user._id,
+            userId: user[0]._id,
           });
         })
         .catch((err) => {
           return res.status(404).json({
-            message: "Auth failed",
+            message: "Auth failed1",
             data: err,
           });
         });
     })
     .catch((err) => {
       return res.status(404).json({
-        message: "Auth failed",
+        message: "Auth failed2",
         data: err,
       });
     });
