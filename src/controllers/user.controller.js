@@ -3,6 +3,7 @@ const passwordService = require("../services/password.service");
 
 // create user
 exports.createUser = (req, res) => {
+  // res.json(user.filter((user) => user.username === req.user.email));
   passwordService.passwordHash(req.body.password).then((hash) => {
     userDatabaseService
       .createNewUser({

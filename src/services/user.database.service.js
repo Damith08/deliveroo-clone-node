@@ -22,7 +22,5 @@ exports.findUserByIdAndDelete = (id) => {
 };
 
 exports.findUser = (email) => {
-  const user = User.find({ email: email }).exec();
-  console.log("DB" + user);
-  return user;
+  return User.find({ email: email }).exec();
 };

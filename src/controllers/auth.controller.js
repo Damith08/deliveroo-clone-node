@@ -10,7 +10,7 @@ exports.loginUser = (req, res) => {
     .then((user) => {
       if (!user[0]) {
         return res.status(401).json({
-          message: "Auth failed 1",
+          message: "Auth failed",
         });
       }
       passwordService
@@ -22,7 +22,6 @@ exports.loginUser = (req, res) => {
             });
           }
 
-          // jwtService.jwtToken(token);
           const token = jwtService.getToken(user);
           res.status(200).json({
             token: token,
@@ -32,14 +31,14 @@ exports.loginUser = (req, res) => {
         })
         .catch((err) => {
           return res.status(404).json({
-            message: "Auth failed1",
+            message: "Auth failed",
             data: err,
           });
         });
     })
     .catch((err) => {
       return res.status(404).json({
-        message: "Auth failed2",
+        message: "Auth failed",
         data: err,
       });
     });
