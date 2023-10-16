@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const bearerToken = require("express-bearer-token");
 
 // import routes
 const authRoutes = require("./routes/auth.routes");
@@ -29,7 +30,8 @@ const port = 3000;
 
 // to parse the JSON body to JavaScript objects
 app.use(bodyParser.json());
-
+app.use(bearerToken());
+app.use(express.json());
 // routes
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
