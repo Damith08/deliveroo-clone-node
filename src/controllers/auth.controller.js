@@ -6,31 +6,36 @@ const jwtService = require("../services/jwt.service");
 exports.loginUser = (req, res) => {
   const email = req.body.email;
   userDatabaseService
-    .findUser(email)
-    .then((user) => {
-      if (!user[0]) {
+    .findUser({ email })
+    .then((foundUser) => {
+      if (!foundUser) {
         return res.status(401).json({
+          success: false,
           message: "Auth failed",
         });
       }
       passwordService
-        .passwordCompare(req.body.password, user[0].password)
+        .passwordCompare(req.body.password, foundUser.password)
         .then((isValid) => {
           if (!isValid) {
             return res.status(401).json({
-              message: "Auth failed",
+              success: false,
+              message: "Invalid credentials",
             });
           }
 
           const token = jwtService.getToken(user);
           res.status(200).json({
-            token: token,
-            expiresIn: 3600,
-            userId: user[0]._id,
+            success: true,
+            message: "Successfully logged in",
+            data: {
+              token,
+            },
           });
         })
         .catch((err) => {
           return res.status(404).json({
+            success: false,
             message: "Auth failed",
             data: err,
           });
@@ -38,6 +43,7 @@ exports.loginUser = (req, res) => {
     })
     .catch((err) => {
       return res.status(404).json({
+        success: false,
         message: "Auth failed",
         data: err,
       });

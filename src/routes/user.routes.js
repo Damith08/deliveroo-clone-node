@@ -3,29 +3,24 @@ const userRouter = express.Router();
 const userController = require("../controllers/user.controller");
 const authMiddleware = require("../middleware/auth.middleware");
 
+userRouter.use(authMiddleware.validateToken);
+
 // get all users
-userRouter.get("/", authMiddleware.validateToken, userController.getAllUsers);
+userRouter.get("/", userController.getAllUsers);
 
 // get a single user
-userRouter.get("/:id", authMiddleware.validateToken, userController.getUser);
+userRouter.get("/:id", userController.getUser);
 
 // create a new user
 userRouter.post("/", userController.createUser);
 
 // update a user partially
-userRouter.patch(
-  "/:id",
-  authMiddleware.validateToken,
-  userController.updateUserPartially,
-);
+userRouter.patch("/:id", userController.updateUserPartially);
 
 // update a user completely
-userRouter.put("/:id", authMiddleware.validateToken, userController.updateUser);
+userRouter.put("/:id", userController.updateUser);
 
 // delete a user
-userRouter.delete(
-  "/:id",
-  authMiddleware.validateToken.userController.deleteUser,
-);
+userRouter.delete("/:id", userController.deleteUser);
 
 module.exports = userRouter;

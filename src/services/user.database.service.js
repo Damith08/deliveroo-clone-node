@@ -21,6 +21,6 @@ exports.findUserByIdAndDelete = (id) => {
   return User.findByIdAndDelete(id).exec();
 };
 
-exports.findUser = (email) => {
-  return User.find({ email: email }).exec();
+exports.findUser = (filters) => {
+  return User.findOne(filters).exec();
 };
