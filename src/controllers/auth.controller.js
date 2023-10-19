@@ -52,27 +52,38 @@ exports.loginUser = (req, res) => {
 
 // Register users
 exports.signupUser = (req, res) => {
-  userDatabaseService
-    .createNewUser({
-      firstName: req.body.first_name,
-      lastName: req.body.last_name,
-      email: req.body.email,
-      username: req.body.username,
-      password: hash,
-      address: req.body.address,
-      contact: req.body.contact,
-    })
-    .then((userSaved) => {
-      return res.status(201).json({
-        success: true,
-        message: "User Registered Successfully",
-        data: userSaved,
-      });
-    })
+  passwordService
+    .passwordHash(req.body.password)
+    .then(
+      userDatabaseService
+        .createNewUser({
+          firstName: req.body.first_name,
+          lastName: req.body.last_name,
+          email: req.body.email,
+          username: req.body.username,
+          password: hash,
+          address: req.body.address,
+          contact: req.body.contact,
+        })
+        .then((userSaved) => {
+          return res.status(201).json({
+            success: true,
+            message: "User Registered Successfully",
+            data: userSaved,
+          });
+        })
+        .catch((err) => {
+          return res.status(404).json({
+            success: false,
+            message: "Registration Failed",
+            data: err,
+          });
+        }),
+    )
     .catch((err) => {
       return res.status(404).json({
         success: false,
-        message: "Registration Failed",
+        message: "saver error",
         data: err,
       });
     });
