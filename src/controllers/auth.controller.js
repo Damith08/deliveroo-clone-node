@@ -7,15 +7,17 @@ exports.loginUser = (req, res) => {
   const email = req.body.email;
   userDatabaseService
     .findUser({ email })
-    .then((foundUser) => {
-      if (!foundUser) {
+    .then((userFound) => {
+      console.log(userFound);
+      if (!userFound) {
+        console.log(userFound);
         return res.status(401).json({
           success: false,
           message: "Auth failed",
         });
       }
       passwordService
-        .passwordCompare(req.body.password, foundUser.password)
+        .passwordCompare(req.body.password, userFound.password)
         .then((isValid) => {
           if (!isValid) {
             return res.status(401).json({
@@ -23,7 +25,7 @@ exports.loginUser = (req, res) => {
               message: "Invalid credentials",
             });
           }
-
+          console.log(isValid);
           const token = jwtService.getToken(user);
           res.status(200).json({
             success: true,
@@ -36,7 +38,7 @@ exports.loginUser = (req, res) => {
         .catch((err) => {
           return res.status(404).json({
             success: false,
-            message: "Auth failed",
+            message: "Auth failed2",
             data: err,
           });
         });
@@ -54,7 +56,7 @@ exports.loginUser = (req, res) => {
 exports.signupUser = (req, res) => {
   passwordService
     .passwordHash(req.body.password)
-    .then(
+    .then((hash) => {
       userDatabaseService
         .createNewUser({
           firstName: req.body.first_name,
@@ -65,25 +67,33 @@ exports.signupUser = (req, res) => {
           address: req.body.address,
           contact: req.body.contact,
         })
-        .then((userSaved) => {
+        .then((UserCreated) => {
           return res.status(201).json({
             success: true,
             message: "User Registered Successfully",
-            data: userSaved,
+            data: UserCreated,
           });
         })
         .catch((err) => {
-          return res.status(404).json({
-            success: false,
-            message: "Registration Failed",
-            data: err,
-          });
-        }),
-    )
+          if (err.code === 11001) {
+            return res.status(409).json({
+              success: false,
+              message: "USER ALREADY EXISTS",
+              data: err,
+            });
+          } else {
+            return res.status(500).json({
+              success: false,
+              message: "Internal server error",
+              data: err,
+            });
+          }
+        });
+    })
     .catch((err) => {
-      return res.status(404).json({
+      return res.status(500).json({
         success: false,
-        message: "saver error",
+        message: "INTERNAL SERVER",
         data: err,
       });
     });
