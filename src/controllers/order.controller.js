@@ -166,29 +166,6 @@ exports.updateOrder = async (req, res) => {
 };
 
 // delete order
-exports.deleteOrder = (req, res) => {
-  const id = req.params.id;
-  orderDatabaseService
-    .findOrderByIdAndDelete(id)
-    .then((orderDelete) => {
-      return res.status(200).json({
-        success: true,
-        message: "Success",
-        data: orderDelete,
-      });
-    })
-    .catch((err) => {
-      console.log(err, "deleteOrder");
-      // TODO: handle required error from mongoose and return 400
-      // TODO: handle unique error from mongoose and return 409
-      return res.status(500).json({
-        success: false,
-        message: "Internal server error",
-        data: err,
-      });
-    });
-};
-
 exports.deleteOrder = async (req, res) => {
   try {
     const id = req.params.id;
