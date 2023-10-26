@@ -127,8 +127,8 @@ exports.updateDish = async (req, res) => {
     const dishUpdated = await dishDatabaseService.findDishByIdAndUpdate(id, {
       name: req.body.name,
       price: req.body.price,
-      restaurant: foundRestaurant._id,
-      dishCategory: foundDishCategory._id,
+      restaurant: req.body.restaurant_id,
+      dishCategory: req.body.dishCategory_id,
     });
     return res.status(200).json({
       success: true,

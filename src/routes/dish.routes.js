@@ -12,7 +12,7 @@ dishRouter.get("/:id", dishController.getDish);
 dishRouter.post("/", dishController.createDish);
 
 // update a dish partially
-dishRouter.put("/:id", dishController.updateDishPartially);
+dishRouter.patch("/:id", dishController.updateDishPartially);
 
 // update a dish completely
 dishRouter.put("/:id", dishController.updateDish);
