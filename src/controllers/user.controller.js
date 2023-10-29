@@ -2,80 +2,41 @@ const userDatabaseService = require("../services/user.database.service");
 const passwordService = require("../services/password.service");
 
 // create user
-// exports.createUser = async (req, res) => {
-//   try {
-//     const isHash = await passwordService.passwordHash(req.body.password);
-//     const savedUser = await userDatabaseService.createNewUser({
-//       firstName: req.body.first_name,
-//       lastName: req.body.last_name,
-//       email: req.body.email,
-//       username: req.body.username,
-//       password: isHash,
-//       address: req.body.address,
-//       contact: req.body.contact,
-//     });
-//     return res.status(201).json({
-//       success: true,
-//       message: "Success",
-//       data: savedUser,
-//     });
-//   } catch (err) {
-//     console.log(err, "createUser");
-//     if (err.code === 11000) {
-//       return res.status(409).json({
-//         success: false,
-//         message: "User already exist",
-//       });
-//     }
-
-//     // TODO: handle type error from mongoose and return 400
-//     // TODO: handle required error from mongoose and return 400
-//     // TODO: handle unique error from mongoose and return 409
-//     return res.status(500).json({
-//       success: false,
-//       message: "Internal server error",
-//       data: err,
-//     });
-//   }
-// };
-exports.createUser = (req, res) => {
-  passwordService.passwordHash(req.body.password).then((hash) => {
-    userDatabaseService
-      .createNewUser({
-        firstName: req.body.first_name,
-        lastName: req.body.last_name,
-        email: req.body.email,
-        username: req.body.username,
-        password: hash,
-        address: req.body.address,
-        contact: req.body.contact,
-      })
-      .then((savedUser) => {
-        return res.status(201).json({
-          success: true,
-          message: "Success",
-          data: savedUser,
-        });
-      })
-      .catch((err) => {
-        console.log(err, "createUser");
-        if (err.code === 11000) {
-          return res.status(409).json({
-            success: false,
-            message: "User already exist",
-          });
-        }
-
-        // TODO: handle type error from mongoose and return 400
-        // TODO: handle required error from mongoose and return 400
-        // TODO: handle unique error from mongoose and return 409
-        return res.status(500).json({
-          success: false,
-          message: "Internal server error",
-          data: err,
-        });
+exports.createUser = async (req, res) => {
+  try {
+    const isHash = await passwordService.passwordHash(req.body.password);
+    const savedUser = await userDatabaseService.createNewUser({
+      firstName: req.body.first_name,
+      lastName: req.body.last_name,
+      email: req.body.email,
+      username: req.body.username,
+      password: isHash,
+      address: req.body.address,
+      contact: req.body.contact,
+    });
+    return res.status(201).json({
+      success: true,
+      message: "Success",
+      data: savedUser,
+    });
+  } catch (err) {
+    console.log(err, "createUser");
+    if (err.code === 11000) {
+      return res.status(409).json({
+        success: false,
+        message: "User already exist",
       });
-  });
+    }
+
+    // TODO: handle type error from mongoose and return 400
+    // TODO: handle required error from mongoose and return 400
+    // TODO: handle unique error from mongoose and return 409
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      data: err,
+    });
+  }
 };
 
 // get all users data
