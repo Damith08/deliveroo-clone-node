@@ -6,15 +6,15 @@ module.exports.validateToken = (req, res, next) => {
   if (!token) {
     return res.status(401).json({
       success: false,
-      message: "Auth failed",
+      message: "UNAUTHORIZED",
     });
   }
 
-  jwt.verify(token, "secret_long_password", (err, payload) => {
+  jwt.verify(token, process.env.SECRET_KEY, (err, payload) => {
     if (err) {
       return res.status(401).json({
         success: false,
-        message: "Token not valid",
+        message: "UNAUTHORIZED",
         data: err,
       });
     }

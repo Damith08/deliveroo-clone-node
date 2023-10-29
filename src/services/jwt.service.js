@@ -5,7 +5,7 @@ exports.getToken = (user) => {
     { email: user.email, sub: user._id },
     process.env.SECRET_KEY,
     {
-      expiresIn: "1h",
+      expiresIn: "45m",
     },
   );
 };
