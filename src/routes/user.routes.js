@@ -3,7 +3,7 @@ const userRouter = express.Router();
 const userController = require("../controllers/user.controller");
 const authMiddleware = require("../middleware/auth.middleware");
 
-userRouter.use(authMiddleware.validateToken);
+// userRouter.use();
 
 // get all users
 userRouter.get("/", userController.getAllUsers);
@@ -15,12 +15,20 @@ userRouter.get("/:id", userController.getUser);
 userRouter.post("/", userController.createUser);
 
 // update a user partially
-userRouter.patch("/:id", userController.updateUserPartially);
+userRouter.patch(
+  "/:id",
+  authMiddleware.validateToken,
+  userController.updateUserPartially,
+);
 
 // update a user completely
-userRouter.put("/:id", userController.updateUser);
+userRouter.put("/:id", authMiddleware.validateToken, userController.updateUser);
 
 // delete a user
-userRouter.delete("/:id", userController.deleteUser);
+userRouter.delete(
+  "/:id",
+  authMiddleware.validateToken,
+  userController.deleteUser,
+);
 
 module.exports = userRouter;
