@@ -8,7 +8,7 @@ commonRouter.get("/", (req, res) => {
   });
 });
 
-commonRouter.get("*", (req, res) => {
+commonRouter.all("*", (req, res) => {
   res.status(404).json({
     success: false,
     message: "Route not found",
