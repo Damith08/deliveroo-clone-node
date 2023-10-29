@@ -1,6 +1,7 @@
 const express = require("express");
 const orderRouter = express.Router();
 const orderController = require("../controllers/order.controller");
+const authMiddleware = require("../middleware/auth.middleware");
 
 // get all orders
 orderRouter.get("/", orderController.getAllOrders);
@@ -9,7 +10,11 @@ orderRouter.get("/", orderController.getAllOrders);
 orderRouter.get("/:id", orderController.getOrder);
 
 // create a new order
-orderRouter.post("/", orderController.createOrder);
+orderRouter.post(
+  "/",
+  authMiddleware.validateToken,
+  orderController.createOrder,
+);
 
 //update a order partially
 orderRouter.patch("/:id", orderController.updateOrderPartially);
