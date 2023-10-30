@@ -74,7 +74,7 @@ exports.createOrder = async (req, res) => {
       });
     }
 
-    const foundUser = await userDatabaseService.findUserById(req.userId);
+    const foundUser = await userDatabaseService.findUserById(req.body.user_id);
 
     if (!foundUser) {
       return res.status(404).json({
@@ -87,9 +87,9 @@ exports.createOrder = async (req, res) => {
     const createOrder = await orderDatabaseService.createNewOrder({
       quantity: req.body.quantity,
       totalPrice: req.body.total_price,
-      dishId: foundDish._id,
-      restaurantId: foundRestaurant._id,
-      userId: foundUser._id,
+      dishId: req.body.dish_id,
+      restaurantId: req.body.restaurant_id,
+      userId: req.body.user_id,
     });
 
     return res.status(201).json({
