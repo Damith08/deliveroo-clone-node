@@ -42,7 +42,23 @@ module.exports.restaurantValidation = (schema) => {
     if (!isValid) {
       return res.status(400).json({
         success: false,
-        message: "VALIDATION FAILED",
+        message: "RESTAURANT VALIDATION FAILED",
+        data: validate.errors,
+      });
+    }
+    next();
+  };
+};
+
+// dish validation
+module.exports.dishValidation = (schema) => {
+  const validate = ajv.compile(schema);
+  return (req, res, next) => {
+    const isValid = validate(req.body);
+    if (!isValid) {
+      return res.status(400).json({
+        success: false,
+        message: "DISH VALIDATION FAILED",
         data: validate.errors,
       });
     }
