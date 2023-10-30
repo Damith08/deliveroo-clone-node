@@ -19,11 +19,19 @@ exports.createRestaurant = async (req, res) => {
     // TODO: handle type error from mongoose and return 400
     // TODO: handle required error from mongoose and return 400
     // TODO: handle unique error from mongoose and return 409
-    return res.status(500).json({
-      success: false,
-      message: "Internal server error",
-      data: err,
-    });
+    if (err.code === 11000) {
+      return res.status(409).json({
+        success: false,
+        message: "RESTAURANT ALREADY EXISTS",
+        data: err,
+      });
+    } else {
+      return res.status(500).json({
+        success: false,
+        message: "Internal server error",
+        data: err,
+      });
+    }
   }
 };
 
