@@ -1,7 +1,6 @@
-const restaurantSchema = {
+const restaurantPatchSchema = {
   type: "object",
   properties: {
-    name: { type: "string" },
     address: { type: "string" },
     email: {
       type: "string",
@@ -9,8 +8,8 @@ const restaurantSchema = {
     },
     contact: { type: "number" },
   },
-  required: ["name", "address", "email", "contact"],
+  required: ["address", "email", "contact"],
   additionalProperties: false,
 };
 
-module.exports = { restaurantSchema };
+module.exports = { restaurantPatchSchema };
