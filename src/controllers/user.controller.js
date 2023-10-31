@@ -100,7 +100,8 @@ exports.updateUserPartially = async (req, res) => {
     const updateUser = await userDatabaseService.findUserByIdAndUpdate(id, {
       firstName: req.body.first_name,
       lastName: req.body.last_name,
-      email: req.body.email,
+      address: req.body.address,
+      contact: req.body.contact,
     });
     return res.status(200).json({
       success: true,
@@ -124,10 +125,13 @@ exports.updateUserPartially = async (req, res) => {
 exports.updateUser = async (req, res) => {
   try {
     const id = req.params.id;
+    const isHash = await passwordService.passwordHash(req.body.password);
     const updateUser = await userDatabaseService.findUserByIdAndUpdate(id, {
       firstName: req.body.first_name,
       lastName: req.body.last_name,
       email: req.body.email,
+      username: req.body.username,
+      password: isHash,
       address: req.body.address,
       contact: req.body.contact,
     });
@@ -156,7 +160,7 @@ exports.deleteUser = async (req, res) => {
     const userDelete = userDatabaseService.findUserByIdAndDelete(id);
     return res.status(200).json({
       success: true,
-      message: "Success",
+      message: "User Deleted",
       data: userDelete,
     });
   } catch (err) {
