@@ -54,7 +54,8 @@ exports.createDish = async (req, res) => {
       );
     if (!foundDishCategory) {
       return res.status(404).json({
-        message: "Dish Category not found",
+        success: false,
+        message: "Dish category cannot found",
         data: err,
       });
     }
@@ -64,16 +65,16 @@ exports.createDish = async (req, res) => {
     );
     if (!foundRestaurant) {
       return res.status(404).json({
-        message: "Restaurant not found",
-        data: err,
+        success: false,
+        message: "Restaurant cannot found",
       });
     }
 
     const saveDish = await dishDatabaseService.createNewDish({
       name: req.body.name,
       price: req.body.price,
-      dishCategory: foundDishCategory._id,
-      restaurant: foundRestaurant._id,
+      dishCategory: req.body.dishCategory_id,
+      restaurant: req.body.restaurant_id,
     });
     return res.status(201).json({
       success: true,
@@ -127,8 +128,8 @@ exports.updateDish = async (req, res) => {
     const dishUpdated = await dishDatabaseService.findDishByIdAndUpdate(id, {
       name: req.body.name,
       price: req.body.price,
-      restaurant: req.body.restaurant_id,
       dishCategory: req.body.dishCategory_id,
+      restaurant: req.body.restaurant_id,
     });
     return res.status(200).json({
       success: true,
