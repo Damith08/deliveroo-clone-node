@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 
 module.exports.validateToken = (req, res, next) => {
-  console.log(req.token);
   const token = req.token;
   if (!token) {
     return res.status(401).json({

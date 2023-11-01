@@ -66,7 +66,7 @@ exports.signupUser = async (req, res) => {
       data: userCreated,
     });
   } catch (err) {
-    if (err.code === 11001) {
+    if (err.code === 11000) {
       return res.status(409).json({
         success: false,
         message: "USER ALREADY EXISTS",
