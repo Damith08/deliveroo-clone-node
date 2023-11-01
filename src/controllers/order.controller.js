@@ -136,15 +136,16 @@ exports.updateOrderPartially = async (req, res) => {
     });
   }
 };
-// update order
+// update order completely
 exports.updateOrder = async (req, res) => {
   try {
+    const id = req.params.id;
     const orderUpdate = await orderDatabaseService.findOrderByIdAndUpdate(id, {
       quantity: req.body.quantity,
       totalPrice: req.body.total_price,
-      dish: req.body.dish_id,
-      restaurant: req.body.restaurant_id,
-      user: req.body.user_id,
+      dishId: req.body.dish_id,
+      restaurantId: req.body.restaurant_id,
+      userId: req.body.user_id,
     });
 
     return res.status(200).json({
