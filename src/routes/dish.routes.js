@@ -3,7 +3,7 @@ const dishRouter = express.Router();
 const dishController = require("../controllers/dish.controller");
 const authMiddleware = require("../middleware/auth.middleware");
 const formatMiddleware = require("../middleware/format.validation.middleware");
-const dishSchema = require("../schema/dish.schema.validation");
+const dishSchema = require("../schema/dish.schema");
 const dishUpdatePartially = require("../schema/dish.patch.schema");
 
 // get all dishes
