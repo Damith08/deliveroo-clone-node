@@ -4,7 +4,7 @@ const userController = require("../controllers/user.controller");
 const authMiddleware = require("../middleware/auth.middleware");
 const formatMiddleware = require("../middleware/format.validation.middleware");
 const userSchema = require("../schema/user.schema");
-const updateUserPartially = require("../schema/user.partially.update.schema");
+const updateUserPartially = require("../schema/user.patch.schema");
 
 // get all users
 userRouter.get("/", authMiddleware.validateToken, userController.getAllUsers);
