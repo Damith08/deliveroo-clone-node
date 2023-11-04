@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const bearerToken = require("express-bearer-token");
@@ -31,6 +32,7 @@ const port = 3000;
 
 // to parse the JSON body to JavaScript objects
 app.use(bodyParser.json());
+app.use(cors()); // CORS for all routes
 app.use(bearerToken());
 app.use(express.json());
 // routes
