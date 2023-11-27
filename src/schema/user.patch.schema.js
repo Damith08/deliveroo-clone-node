@@ -11,7 +11,7 @@ const userPartiallyUpdateSchema = {
       type: "string",
     },
     contact: {
-      type: "number",
+      type: "string",
     },
   },
   required: ["first_name", "last_name", "address", "contact"],

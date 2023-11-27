@@ -8,7 +8,12 @@ const restaurantSchema = new Schema(
     name: { type: String, required: true },
     address: { type: String, required: true },
     email: { type: String, require: true, unique: true },
-    contact: { type: Number, required: true },
+    contact: {
+      type: String,
+      minLength: [10, "Must be at least 10 digits"],
+      maxLength: [12, "Must enter equal or less than 12 digits"],
+      required: true,
+    },
   },
   {
     timestamps: true,

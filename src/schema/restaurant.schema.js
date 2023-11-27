@@ -7,7 +7,7 @@ const restaurantSchema = {
       type: "string",
       format: "email",
     },
-    contact: { type: "number" },
+    contact: { type: "string" },
   },
   required: ["name", "address", "email", "contact"],
   additionalProperties: false,

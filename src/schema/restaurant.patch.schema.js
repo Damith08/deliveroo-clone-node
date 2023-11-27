@@ -6,7 +6,7 @@ const restaurantPatchSchema = {
       type: "string",
       format: "email",
     },
-    contact: { type: "number" },
+    contact: { type: "string" },
   },
   required: ["address", "email", "contact"],
   additionalProperties: false,

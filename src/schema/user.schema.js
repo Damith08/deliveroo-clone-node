@@ -21,7 +21,7 @@ const registerSchema = {
       type: "string",
     },
     contact: {
-      type: "number",
+      type: "string",
     },
   },
   required: [

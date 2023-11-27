@@ -32,7 +32,9 @@ const userSchema = new Schema({
     required: true,
   },
   contact: {
-    type: Number,
+    type: String,
+    minLength: [10, "Must be at least 10 digits"],
+    maxLength: [12, "Must enter equal or less than 12 digits"],
     required: true,
   },
 });
