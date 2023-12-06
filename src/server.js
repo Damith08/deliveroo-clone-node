@@ -16,7 +16,7 @@ const dishCategoryRoutes = require("./routes/dish-category.routes");
 
 // connecting to the Database
 mongoose
-  .connect("mongodb://localhost:27017/deliveroo-clone-node")
+  .connect("mongodb://localhost:27017/foodie-node")
   .then(() => {
     console.log("Connected to the Database successfully!");
   })
@@ -45,5 +45,5 @@ app.use("/dish-categories", dishCategoryRoutes);
 app.use(commonRoutes);
 
 app.listen(port, () => {
-  console.log(`deliveroo-node API listening on port ${port}`);
+  console.log(`foodie-node API listening on port ${port}`);
 });
