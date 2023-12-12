@@ -11,7 +11,11 @@ const dishSchema = new Schema(
       required: true,
       unique: true,
     },
-    price: { type: Number, required: true },
+    description: {
+      type: String,
+      required: true,
+    },
+    price: { type: String, required: true },
     restaurant: {
       type: Schema.Types.ObjectId,
       ref: DB_COLLECTIONS.RESTAURANT,
@@ -20,6 +24,10 @@ const dishSchema = new Schema(
     dishCategory: {
       type: Schema.Types.ObjectId,
       ref: DB_COLLECTIONS.DISH_CATEGORY,
+      required: true,
+    },
+    image: {
+      type: String,
       required: true,
     },
   },

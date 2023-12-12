@@ -13,11 +13,7 @@ router.get("/", restaurantController.getAllRestaurants);
 router.get("/:id", restaurantController.getRestaurant);
 
 // create a new restaurant
-router.post(
-  "/",
-  formatMiddleware.schemaValidation(restaurantSchema.restaurantSchema),
-  restaurantController.createRestaurant,
-);
+router.post("/", restaurantController.createRestaurant);
 
 // update a restaurant partially
 router.patch(

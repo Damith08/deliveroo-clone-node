@@ -5,7 +5,8 @@
   "main": "./src/server.js",
   "scripts": {
     "dev": "nodemon ./src/server.js",
-    "start": "node ./src/server.js"
+    "start": "node ./src/server.js",
+    "kill": "echo 'Enter port number' && read port && kill $(lsof -t -i:$port)"
   },
   "repository": {
     "type": "git",

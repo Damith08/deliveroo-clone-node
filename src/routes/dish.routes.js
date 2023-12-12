@@ -13,11 +13,7 @@ dishRouter.get("/", dishController.getAllDishes);
 dishRouter.get("/:id", dishController.getDish);
 
 // create a new dish
-dishRouter.post(
-  "/",
-  formatMiddleware.schemaValidation(dishSchema.dishSchema),
-  dishController.createDish,
-);
+dishRouter.post("/", dishController.createDish);
 
 // update a dish partially
 dishRouter.patch(

@@ -72,9 +72,11 @@ exports.createDish = async (req, res) => {
 
     const saveDish = await dishDatabaseService.createNewDish({
       name: req.body.name,
+      description: req.body.description,
       price: req.body.price,
       dishCategory: req.body.dishCategory_id,
       restaurant: req.body.restaurant_id,
+      image: req.body.image,
     });
     return res.status(201).json({
       success: true,
@@ -102,6 +104,7 @@ exports.updateDishPartially = async (req, res) => {
       await dishDatabaseService.findDishByIdAndUpdate(id, {
         name: req.body.name,
         price: req.body.price,
+        image: req.body.image,
       });
     return res.status(200).json({
       success: true,
@@ -127,9 +130,11 @@ exports.updateDish = async (req, res) => {
     const id = req.params.id;
     const dishUpdated = await dishDatabaseService.findDishByIdAndUpdate(id, {
       name: req.body.name,
+      description: req.body.description,
       price: req.body.price,
       dishCategory: req.body.dishCategory_id,
       restaurant: req.body.restaurant_id,
+      image: req.body.image,
     });
     return res.status(200).json({
       success: true,
