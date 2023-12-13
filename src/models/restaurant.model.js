@@ -6,6 +6,11 @@ const Schema = mongoose.Schema;
 const restaurantSchema = new Schema(
   {
     name: { type: String, required: true },
+    image: { type: String, required: true },
+    tag: [String],
+    closeAt: { type: Date },
+    minimum: { type: Number, required: true },
+    deliveryCharge: { type: Number, required: true },
     address: { type: String, required: true },
     email: { type: String, require: true, unique: true },
     contact: {

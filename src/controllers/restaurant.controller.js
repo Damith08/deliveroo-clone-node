@@ -5,6 +5,11 @@ exports.createRestaurant = async (req, res) => {
   try {
     const savedRestaurant = await restaurantService.createNewRestaurant({
       name: req.body.name,
+      image: req.body.image,
+      tag: req.body.tag,
+      closeAt: req.body.closeAt,
+      minimum: req.body.minimum,
+      deliveryCharge: req.body.deliveryCharge,
       address: req.body.address,
       email: req.body.email,
       contact: req.body.contact,
@@ -115,6 +120,11 @@ exports.updateRestaurant = async (req, res) => {
     const updateRestaurant =
       await restaurantService.findRestaurantByIdAndUpdate(id, {
         name: req.body.name,
+        image: req.body.image,
+        tag: req.body.tag,
+        closeAt: req.body.closeAt,
+        minimum: req.body.minimum,
+        deliveryCharge: req.body.deliveryCharge,
         address: req.body.address,
         email: req.body.email,
         contact: req.body.contact,
