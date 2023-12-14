@@ -15,7 +15,7 @@ const dishSchema = new Schema(
       type: String,
       required: true,
     },
-    price: { type: String, required: true },
+    price: { type: Number, required: true },
     restaurant: {
       type: Schema.Types.ObjectId,
       ref: DB_COLLECTIONS.RESTAURANT,

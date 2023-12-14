@@ -1,7 +1,7 @@
 const Dish = require("../models/dish.model");
 
 exports.findAllDishes = () => {
-  return Dish.find().exec();
+  return Dish.find().populate("dishCategory").exec();
 };
 
 exports.findDishById = (id) => {

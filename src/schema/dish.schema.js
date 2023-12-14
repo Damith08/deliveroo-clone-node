@@ -3,7 +3,7 @@ const dishSchema = {
   properties: {
     name: { type: "string" },
     description: { type: "string" },
-    price: { type: "string" },
+    price: { type: "number" },
     restaurant_id: {
       type: "string",
     },

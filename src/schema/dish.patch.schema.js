@@ -2,7 +2,7 @@ const dishPatchSchema = {
   type: "object",
   properties: {
     name: { type: "string" },
-    price: { type: "string" },
+    price: { type: "number" },
     image: { type: "string" },
   },
   required: ["name", "price"],
