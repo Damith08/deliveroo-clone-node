@@ -32,9 +32,9 @@ exports.loginUser = async (req, res) => {
       },
     });
   } catch (err) {
-    return res.status(404).json({
+    return res.status(500).json({
       success: false,
-      message: "Auth failed",
+      message: "Internal server error",
       data: err,
     });
   }

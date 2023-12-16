@@ -28,6 +28,12 @@ exports.getDish = async (req, res) => {
   try {
     const id = req.params.id;
     const dish = await dishDatabaseService.findDishById(id);
+    if (!dish) {
+      return res.status(404).json({
+        success: false,
+        message: "dish with the given id is not found",
+      });
+    }
     return res.status(200).json({
       success: true,
       message: "Success",
