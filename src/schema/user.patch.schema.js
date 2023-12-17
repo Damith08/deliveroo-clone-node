@@ -1,10 +1,10 @@
 const userPartiallyUpdateSchema = {
   type: "object",
   properties: {
-    first_name: {
+    firstName: {
       type: "string",
     },
-    last_name: {
+    lastName: {
       type: "string",
     },
     address: {
@@ -14,7 +14,7 @@ const userPartiallyUpdateSchema = {
       type: "string",
     },
   },
-  required: ["first_name", "last_name", "address", "contact"],
+  required: ["firstName", "lastName", "address", "contact"],
   additionalProperties: false,
 };
 module.exports = { userPartiallyUpdateSchema };

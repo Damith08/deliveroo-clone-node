@@ -52,8 +52,8 @@ exports.signupUser = async (req, res) => {
       });
     }
     const userCreated = await userDatabaseService.createNewUser({
-      firstName: req.body.first_name,
-      lastName: req.body.last_name,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
       email: req.body.email,
       username: req.body.username,
       password: hash,

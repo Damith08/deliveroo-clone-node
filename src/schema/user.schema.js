@@ -1,10 +1,10 @@
 const registerSchema = {
   type: "object",
   properties: {
-    first_name: {
+    firstName: {
       type: "string",
     },
-    last_name: {
+    lastName: {
       type: "string",
     },
     username: {
@@ -25,8 +25,8 @@ const registerSchema = {
     },
   },
   required: [
-    "first_name",
-    "last_name",
+    "firstName",
+    "lastName",
     "username",
     "email",
     "password",
