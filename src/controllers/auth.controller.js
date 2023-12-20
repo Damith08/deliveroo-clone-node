@@ -81,3 +81,27 @@ exports.signupUser = async (req, res) => {
     }
   }
 };
+
+exports.checkEmail = async (req, res) => {
+  try {
+    const email = req.body.email;
+    const emailFound = await userDatabaseService.findUser({ email });
+
+    if (!emailFound) {
+      return res.status(409).json({
+        success: false,
+        message: "Email cannot find",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Your email found",
+      data: email,
+    });
+  } catch {
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
